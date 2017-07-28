@@ -1,6 +1,12 @@
 <h1>Hey, I'm Garry the Approver</h1>
-<form>
+<!-- <form >
     Enter the User ID of the shifts you would like to auto approve?
     <input type="text" name="user_id">
 </form>
-<button>Approve Shifts!</button>
+<button>Approve Shifts!</button> -->
+
+<%= form_tag "/approve", method: "get" do %>
+  <%= label_tag(:user_id, "Enter the User ID to auto approve") %>
+  <%= text_field_tag(:user_id) %>
+  <%= submit_tag("Approve Shifts!") %>
+<% end %>
