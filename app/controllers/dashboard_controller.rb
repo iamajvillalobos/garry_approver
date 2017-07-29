@@ -1,11 +1,27 @@
 class DashboardController < ApplicationController
+  
+  @@token = "87a45657ebf9408587ae7f01501f68921382d553ba540b97eca59914d330f453"
+  @@header = {"Authorization" => "Bearer #{@@token}"}
   def index
   end
+  
+  def find_users_with_timesheets
+    url = "https://my.tanda.co/api/v2/timesheets/current?show_costs=true&show_award_interpretation=false"
+    
+    current_timesheets = HTTParty.get(url, headers: @@header).parsed_response
+    
+    @current_users = []
+    current_timesheets.each do |timesheet|
+      @current_users << timesheet["user_id"]
+    end
+    binding.pry
+  end
+  
   
   def approve
     user_id = params[:user_id]
     url = "https://my.tanda.co/api/v2/timesheets/for/#{user_id}/current?show_costs=true"
-    token = "5c8e33cc8db9960d0d6d6fab9c201339c20bbbd15b63706f7d465cc12631c4e9"
+    token = "87a45657ebf9408587ae7f01501f68921382d553ba540b97eca59914d330f453"
     header = {"Authorization" => "Bearer #{token}"}
     
     response = HTTParty.get(url, headers: header).parsed_response
