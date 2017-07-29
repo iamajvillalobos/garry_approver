@@ -1,13 +1,12 @@
-<h1>Hey, I'm Garry the Approver</h1>
+<div class="container text-center" style="padding-top: 50px">
 
+  <img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAA0dAAAAJGJmNzczZjdmLTRiY2UtNDZlNi1hMWMxLTgxNjJlM2U3ZDU2ZA.jpg" />
+  <h1>Hey, I'm Garry the Approver</h1>
 
-<%= form_tag "/approve", method: "get" do %>
-  <%= label_tag(:user_id, "Enter the User ID to auto approve") %>
-  <%= text_field_tag(:user_id) %>
-  <%= submit_tag("Approve Shifts!") %>
-<% end %>
-<p></p>
-<%= form_tag "/find_users_with_timesheets", method: "get" do %>
-  <%= label_tag(:user_id, "Autoapprove all shift in current week") %>
-  <%= submit_tag("Approve All Shifts!") %>
-<% end %>
+  <%= form_tag "/find_users_with_timesheets", method: "get" do %>
+    <%= label_tag(:user_id, "Autoapprove all shift in current week") %>
+    <br />
+    <%= submit_tag("Approve All Shifts!") %>
+  <% end %>
+
+</div>
