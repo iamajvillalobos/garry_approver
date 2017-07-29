@@ -14,12 +14,17 @@ class DashboardController < ApplicationController
     current_timesheets.each do |timesheet|
       @current_users << timesheet["user_id"]
     end
+    check_timesheet(@current_users)
   end
   
-  def 
+  def check_timesheet(user_list)
+    user_list.each do |user|
+      approve(user)
+    end
+  end
   
-  def approve
-    user_id = params[:user_id]
+  def approve(user)
+    user_id = user
     url = "https://my.tanda.co/api/v2/timesheets/for/#{user_id}/current?show_costs=true"
     token = "87a45657ebf9408587ae7f01501f68921382d553ba540b97eca59914d330f453"
     header = {"Authorization" => "Bearer #{token}"}
@@ -31,9 +36,7 @@ class DashboardController < ApplicationController
     response["shifts"].each do |shift|
       schedule_url = "https://my.tanda.co/api/v2/schedules?user_ids=#{shift["user_id"]}&from=#{shift["date"]}&to=#{shift["date"]}&show_costs=true&include_names=false" 
       schedule_response = HTTParty.get(schedule_url, headers: header).parsed_response.first
-      
       to_be_approved_shifts << shift if schedule_response["cost"] == shift["cost"]
-        
     end
     
     to_be_approved_shifts.each do |shift|
@@ -43,7 +46,6 @@ class DashboardController < ApplicationController
       HTTParty.put(shift_approved_url, headers: header, body: body)
     end
 
-    redirect_to root_path
   end
     
   
