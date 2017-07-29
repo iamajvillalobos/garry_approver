@@ -14,9 +14,9 @@ class DashboardController < ApplicationController
     current_timesheets.each do |timesheet|
       @current_users << timesheet["user_id"]
     end
-    binding.pry
   end
   
+  def 
   
   def approve
     user_id = params[:user_id]
